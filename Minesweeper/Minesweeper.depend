@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1483881397 source:c:\users\monica\desktop\minesweeper\main.cpp
-	<GL/glut.h>
-	<iostream>
-	<time.h>
-	<stdlib.h>
-	<iomanip>
-
