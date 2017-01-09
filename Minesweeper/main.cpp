@@ -132,3 +132,40 @@ void nr_bombe_imprejur(int line,int column)
 
 }
 
+void uncover_cell(int x , int y)
+{
+    show_content(x,y);
+    if(board[x][y].content==BLANK)
+        uncover_area(x,y);
+}
+
+
+void uncover_area_verif_status(int x, int y)
+{
+    if(board[x][y].status==COVER)
+    {
+        if(board[x][y].content!=MINE)
+        {
+            board[x][y].status=UNCOVER;
+            game_stats.covered--;
+            game_stats.uncovered++;
+            show_content(x,y);
+            if(board[x][y].content==BLANK)
+                uncover_area(x,y);
+        }
+    }
+}
+
+
+void uncover_area(int x, int y)
+{
+    if(x-1>=0)
+        uncover_area_verif_status(x-1,y);
+    if(x+1<10)
+        uncover_area_verif_status(x+1,y);
+    if(y-1>=0)
+        uncover_area_verif_status(x,y-1);
+    if(y+1<10)
+        uncover_area_verif_status(x,y+1);
+}
+
