@@ -169,3 +169,62 @@ void uncover_area(int x, int y)
         uncover_area_verif_status(x,y+1);
 }
 
+void left_click(int x,int y)
+{
+    if(board[x][y].status==COVER)
+    {
+        if(UNKNOWN!=game_stats.verif_status())
+        {
+            game_over(game_stats.verif_status());
+            return;
+        }
+        board[x][y].status=UNCOVER;
+        game_stats.covered--;
+        game_stats.uncovered++;
+        draw_square(x,y,UNCOVER);
+        uncover_cell(x,y);
+    }
+}
+
+
+void right_click(int x, int y)
+{
+    if(UNKNOWN!=game_stats.verif_status())
+        {
+            game_over(game_stats.verif_status());
+            return;
+        }
+    if(board[x][y].status==FLAG)
+    {
+        board[x][y].status=COVER;
+        game_stats.flagged--;
+        game_stats.covered++;
+    }
+    else if(board[x][y].status==COVER)
+    {
+        if(game_stats.flagged<10)
+        {
+            board[x][y].status=FLAG;
+            game_stats.covered--;
+            game_stats.flagged++;
+
+        }
+        else
+            printMessage("NO MORE FLAGS!");
+    }
+    draw_square(x,y,board[x][y].status);
+}
+
+
+void game_over(int rezultat)
+{
+    if(rezultat!=UNKNOWN)
+    {
+        glutMouseFunc(NULL);
+        if(rezultat==WIN)
+            printMessage("YOU WIN!");
+        else
+            printMessage("YOU LOSE!");
+    }
+}
+
