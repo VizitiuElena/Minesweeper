@@ -3,6 +3,7 @@
 #include<time.h>
 #include<stdlib.h>
 #include<iomanip>
+#define MINES_NUMBER 20
 
 
 using namespace std;
@@ -29,7 +30,7 @@ class Minesweeper
     public:
         int flagged,uncovered,covered,status,rezultat;
         time_t start_time,end_time,total_time;
-        int poz_m[10][2],nr_mines;
+        int poz_m[MINES_NUMBER][2],nr_mines;
         Minesweeper()
         {
             flagged=0;
@@ -39,7 +40,7 @@ class Minesweeper
             rezultat=UNKNOWN;
             start_time=time(NULL);
             nr_mines=0;
-            for(int i=0;i<10;i++)
+            for(int i=0;i<MINES_NUMBER;i++)
                 for(int j=0;j<2;j++)
                     poz_m[i][j]=-1;
         }
@@ -55,7 +56,7 @@ class Minesweeper
         {
             if(rezultat!=UNKNOWN)
                 return rezultat;
-            if(covered==0&&flagged==mines)
+            if(covered==0&&flagged==MINES_NUMBER)
             {
                 status=0;
                 rezultat=WIN;
@@ -65,7 +66,7 @@ class Minesweeper
                 return WIN;
             }
 
-            for(int i=0;i<mines;i++)
+            for(int i=0;i<MINES_NUMBER;i++)
             {
                 if(UNCOVER==board[poz_m[i][0]][poz_m[i][1]].status)
                 {
@@ -84,11 +85,51 @@ class Minesweeper
 
 Minesweeper game_stats;
 
+void initializare_joc();
+void draw_board();
+void bombe_random();
+void bombe_adiacente();
+void nr_bombe_imprejur(int i,int j);
+void uncover_cell(int i, int j);
+void uncover_area(int i, int j);
+void uncover_area_verif_status(int k, int l);
+void left_click(int i,int j);
+void right_click(int i,int j);
+void game_over(int result);
+
+void draw_square(int x,int y,int color);
+void user_input(int button,int state,int x,int y);
+void show_content(int i,int j);
+
+void gl_init();
+void display();
+void printMessage(char *msg);
+void printString(char *s);
+void makeRasterFont(void);
+
+int main(int argc, char *argv[])
+{
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(400,400);
+    glutInitWindowPosition(50,50);
+    glutCreateWindow("Minesweeper");
+    glutDisplayFunc(display);
+    glutMouseFunc(user_input);
+
+    gl_init();
+    initializare_joc();
+
+    glutMainLoop();
+    return 0;
+}
+
+
 void bombe_random()
 {
     srand(time(NULL));
     int x=0,y=0,nrbombe=0;
-    while(nrbombe!=10)
+    while(nrbombe!=MINES_NUMBER)
     {
         x=rand()%10;
         y=rand()%10;
@@ -130,6 +171,13 @@ void nr_bombe_imprejur(int line,int column)
                 board[line][column].content++;
     }
 
+}
+
+void initializare_joc()
+{
+    bombe_random();
+    bombe_adiacente();
+    draw_board();
 }
 
 void uncover_cell(int x , int y)
@@ -202,7 +250,7 @@ void right_click(int x, int y)
     }
     else if(board[x][y].status==COVER)
     {
-        if(game_stats.flagged<10)
+        if(game_stats.flagged<MINES_NUMBER)
         {
             board[x][y].status=FLAG;
             game_stats.covered--;
@@ -311,7 +359,7 @@ void show_content(int i,int j)
 {
     char element=board[i][j].content+48;
     if(board[i][j].content==MINE)
-        element=77; //M
+        element=66; //B
     if(board[i][j].content==BLANK)
         element=32; //spatiu
     glColor3f(0.0,0.0,0.0);

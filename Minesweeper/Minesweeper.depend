@@ -6,3 +6,10 @@
 	<stdlib.h>
 	<iomanip>
 
+1484341077 source:c:\users\monica\documents\github\minesweeper\minesweeper\main.cpp
+	<GL/glut.h>
+	<iostream>
+	<time.h>
+	<stdlib.h>
+	<iomanip>
+
