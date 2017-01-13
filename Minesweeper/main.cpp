@@ -363,7 +363,7 @@ void show_content(int i,int j)
     if(board[i][j].content==BLANK)
         element=32; //spatiu
     glColor3f(0.0,0.0,0.0);
-    glRasterPos2i(i*10+2,j*10+2);
+    glRasterPos2i(i*10+4,j*10+4);
     printString(&element);
     glFlush();
 
