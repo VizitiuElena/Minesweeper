@@ -299,13 +299,13 @@ void draw_board()
     glBegin(GL_LINES);
     for(x_coord=0;x_coord<=100;x_coord+=10)
     {
-        glVertex3i(x_coord,0,0);
-        glVertex3i(x_coord,100,0);
+        glVertex2i(x_coord,0);
+        glVertex2i(x_coord,100);
     }
     for(y_coord=0;y_coord<=100;y_coord+=10)
     {
-        glVertex3i(0,y_coord,0);
-        glVertex3i(100,y_coord,0);
+        glVertex2i(0,y_coord);
+        glVertex2i(100,y_coord);
     }
     for(int i=0;i<10;i++)
     {
@@ -336,10 +336,10 @@ void draw_square(int i,int j,int color)
     y=j*10;
 
     glBegin(GL_POLYGON);
-    glVertex3i(x+1,y+1,0);
-    glVertex3i(x+1,y+10-1,0);
-    glVertex3i(x+10-1,y+10-1,0);
-    glVertex3i(x+10-1,y+1,0);
+    glVertex2i(x+1,y+1);
+    glVertex2i(x+1,y+10-1);
+    glVertex2i(x+10-1,y+10-1);
+    glVertex2i(x+10-1,y+1);
 
     glEnd();
     glFlush();
