@@ -12,15 +12,10 @@ enum {MINE=-1,BLANK,ADJACENT};
 enum {LOSE=-1,UNKNOWN,WIN};
 
 
-class cell
+struct cell
 {
-    public :
-    int content ;
-    int status;
-    cell()
-    {
-        content=BLANK;status=COVER;
-    }
+    int content=BLANK;
+    int status=COVER;
 };
 
 cell board[10][10];
